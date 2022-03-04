@@ -3,7 +3,7 @@
 Welcome to the Bungalow Takehome Challenge for Data Analytics! This is a barebones repo to get you started.
 
 ## What to build
-A common task for analytics engineers at Bungalow involves the modelling from the internal datasets, storing it and making it available for downstream teams such as finance and product and ultimately the entire organization.
+A common task for data analytics engineers at Bungalow involves modelling of data from the internal datasets, storing it and making it available for downstream teams such as finance and product and ultimately the entire organization.
 For this challenge we'd like to give a brief snapshot of a common workload may entail. Of course, this might become a big task. Therefore, to save time for you, we did some of the heavy lifting, like the set up and some scaffolding of the environment.
 
 For this test we will collect the [current weather data](https://openweathermap.org/current) from [OpenWeatherMap](https://openweathermap.org/). The free API will work for this assignment. You shouldn’t pay for the API key.
