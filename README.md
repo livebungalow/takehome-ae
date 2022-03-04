@@ -6,7 +6,7 @@ Welcome to the Bungalow Takehome Challenge for Data Analytics! This is a barebon
 A common task for data analytics engineers at Bungalow involves modelling of data from the internal datasets, storing it and making it available for downstream teams such as finance and product and ultimately the entire organization.
 For this challenge we'd like to give a brief snapshot of a common workload may entail. Of course, this might become a big task. Therefore, to save time for you, we did some of the heavy lifting, like the set up and some scaffolding of the environment.
 
-For this test we will collect the [current weather data](https://openweathermap.org/current) from [OpenWeatherMap](https://openweathermap.org/). The free API will work for this assignment. You shouldn’t pay for the API key.
+For this challenge we will collect the [current weather data](https://openweathermap.org/current) from [OpenWeatherMap](https://openweathermap.org/). The free API will work for this assignment. You shouldn’t pay for the API key.
 
 Please install [Docker Desktop](https://www.docker.com/get-started) on your laptop. It will contain the environment that we would need for the next steps.
 
@@ -23,7 +23,7 @@ Below are the steps in the data flow diagram:
 
 - The fetcher script would process and clean the data, then stores it in the Postgres database considering relationships, integrity, performance, and extendability. We made a basic version of the fetcher Python script for you to save your time. You can improve the fetcher if you need to. For example, you will need to add 10 more cities to the list of cities for the next step.
 
-- The transformer.py script, that represents the Transformer DAG, would transform the data from the previous step to prepare some derived dataset tables. You will have the choice to implement the transformations both in Python or SQL. This is the main part of your takehome test.
+- The transformer.py script, that represents the Transformer DAG, would transform the data from the previous step to prepare some derived dataset tables. You will have the choice to implement the transformations both in Python or SQL. This is the main part of your takehome challenge.
 
 - The Transformer writes the datasets back to Postgres.
 
@@ -45,7 +45,7 @@ We will expect to see the following items in your Github pull request:
     - Top 7 hottest day per city in each calendar year
     - an UPSERT dataset that keeps the latest weather information per city
     - The least humid city per state
-    - Moving average of the temperature per city for 5 reading 
+    - Moving average of the temperature per city for 5 readings
 
 - The data model SQL and your design for its data modelling
 
