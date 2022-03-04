@@ -1,12 +1,12 @@
-# Bungalow Take Home Project for Data Engineer Role (V2. 2021-11-02)
+# Bungalow Take Home Project for Analytics Engineer Role (V1. 2022-03-03)
 
-Welcome to the Bungalow Takehome Challenge for Data Engineering! This is a barebones repo to get you started.
+Welcome to the Bungalow Takehome Challenge for Data Analytics! This is a barebones repo to get you started.
 
 ## What to build
-A common task for data engineers at Bungalow involves the integration of the of third-party data, modelling data, storing it and making it available for downstream teams such as analytics, data science and ultimately the entire organization.
+A common task for data analytics engineers at Bungalow involves modelling of data from the internal datasets, storing it and making it available for downstream teams such as finance and product and ultimately the entire organization.
 For this challenge we'd like to give a brief snapshot of a common workload may entail. Of course, this might become a big task. Therefore, to save time for you, we did some of the heavy lifting, like the set up and some scaffolding of the environment.
 
-For this test we will collect the [current weather data](https://openweathermap.org/current) from [OpenWeatherMap](https://openweathermap.org/). The free API will work for this assignment. You shouldn’t pay for the API.
+For this challenge we will collect the [current weather data](https://openweathermap.org/current) from [OpenWeatherMap](https://openweathermap.org/). The free API will work for this assignment. You shouldn’t pay for the API key.
 
 Please install [Docker Desktop](https://www.docker.com/get-started) on your laptop. It will contain the environment that we would need for the next steps.
 
@@ -21,9 +21,9 @@ Below are the steps in the data flow diagram:
 
 - fetcher.py script, that represents the fetcher DAG, would retrieve the data from the current weather API.
 
-- The fetcher script would process and clean the data, then stores it the Postgres database considering relationships, integrity, performance, and extendability.
+- The fetcher script would process and clean the data, then stores it in the Postgres database considering relationships, integrity, performance, and extendability. We made a basic version of the fetcher Python script for you to save your time. You can improve the fetcher if you need to. For example, you will need to add 10 more cities to the list of cities for the next step.
 
-- The transformer.py script, that represents the Transformer DAG, would transform the data from the previous step to prepare some derived dataset tables. You will have the choice to implement the transformations both in Python or SQL.
+- The transformer.py script, that represents the Transformer DAG, would transform the data from the previous step to prepare some derived dataset tables. You will have the choice to implement the transformations both in Python or SQL. This is the main part of your takehome challenge.
 
 - The Transformer writes the datasets back to Postgres.
 
@@ -40,6 +40,12 @@ We are more interested in seeing your thought process and approach to solving th
 We will expect to see the following items in your Github pull request:
 
 - Your Python code for data fetcher and transformer.
+  - In the transformer, please create data models for:
+    - Top hot cities in your city list per day
+    - Top 7 hottest day per city in each calendar year
+    - An UPSERT dataset that keeps the latest weather information per city
+    - The least humid city per state
+    - Moving average of the temperature per city for 5 readings
 
 - The data model SQL and your design for its data modelling
 
@@ -50,7 +56,7 @@ We will use this project as our basis for our evaluation of your overall fit for
 
 To do this, we will review your code with an eye for the following:
 
-- Readability, scalability and usability
+- Readability and usability
 
 - Data processing and relational modelling
 
@@ -71,10 +77,12 @@ Fork this repository and clone to your local environment
 
 - Prepare your environment with Python and any other tools you may need. Docker can do it for you.
   - To run the docker-compose, you need to run the following commands:
-      ```shell
+      ```bash
+      # Create you own .env file from our sample and edit the .env file with the OpenWeatherMap API key
+      cp env.sample .env
       # Initializing the folders and the non-root user for Airflow
       mkdir -p  ./logs ./plugins
-      echo -e "AIRFLOW_UID=$(id -u)" > .env
+      echo -e "AIRFLOW_UID=$(id -u)" >> .env
       # Initializing airflow database
       docker-compose up airflow-init
       # Running the docker-compose
@@ -82,7 +90,7 @@ Fork this repository and clone to your local environment
       # You can see the Airflow UI in http://localhost:8080 with username/password: airflow
       ```
   - If you run to any problems with the environment, please refer to [here](https://airflow.apache.org/docs/apache-airflow/stable/start/docker.html).
-- Fill in the TODO in the repository. There are currently 6 TODOS, but you can go beyond and above.
+- Fill in the TODO in the repository. There are currently less than 5 TODOS, but you can go beyond and above.
   - Any problems with the DAGs? They are taken from [here](https://airflow.apache.org/docs/apache-airflow/stable/tutorial.html). Please take a look at the rest of tutorial if needed.
   - You can check Postgres operator from [here](https://airflow.apache.org/docs/apache-airflow-providers-postgres/stable/operators/postgres_operator_howto_guide.html)
   - To keep it simple, let's use the Airflow database for the storage of your dataset
