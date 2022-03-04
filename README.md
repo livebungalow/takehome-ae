@@ -43,7 +43,7 @@ We will expect to see the following items in your Github pull request:
   - In the transformer, please create data models for:
     - Top hot cities in your city list per day
     - Top 7 hottest day per city in each calendar year
-    - an UPSERT dataset that keeps the latest weather information per city
+    - An UPSERT dataset that keeps the latest weather information per city
     - The least humid city per state
     - Moving average of the temperature per city for 5 readings
 
