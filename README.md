@@ -1,6 +1,6 @@
 # Bungalow Take Home Project for Analytics Engineer Role (V1. 2022-03-03)
 
-Welcome to the Bungalow Takehome Challenge for Analytics Engineering! This is a barebones repo to get you started.
+Welcome to the Bungalow Takehome Challenge for Data Analytics! This is a barebones repo to get you started.
 
 ## What to build
 A common task for analytics engineers at Bungalow involves the modelling from the internal datasets, storing it and making it available for downstream teams such as finance and product and ultimately the entire organization.
