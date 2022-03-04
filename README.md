@@ -21,7 +21,7 @@ Below are the steps in the data flow diagram:
 
 - fetcher.py script, that represents the fetcher DAG, would retrieve the data from the current weather API.
 
-- The fetcher script would process and clean the data, then stores it the Postgres database considering relationships, integrity, performance, and extendability. We make a basic version of it for you to save your time. You can improve it if you need to. For example, you will need to add 10 more cities to the list of cities for the next step.
+- The fetcher script would process and clean the data, then stores it in the Postgres database considering relationships, integrity, performance, and extendability. We made a basic version of the fetcher Python script for you to save your time. You can improve the fetcher if you need to. For example, you will need to add 10 more cities to the list of cities for the next step.
 
 - The transformer.py script, that represents the Transformer DAG, would transform the data from the previous step to prepare some derived dataset tables. You will have the choice to implement the transformations both in Python or SQL. This is the main part of your takehome test.
 
