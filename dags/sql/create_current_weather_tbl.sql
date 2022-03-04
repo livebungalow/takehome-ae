@@ -1,35 +1,25 @@
 CREATE TABLE IF NOT EXISTS current_weather (
-
     city_id             BIGINT,
     city_name           VARCHAR(256),
-
     country             VARCHAR(2),
-
     utc_recorded_at     TIMESTAMPTZ,
     tz_offset_hours     INTERVAL,
-
     lat                 NUMERIC(11, 8),
     lon                 NUMERIC(11, 8),
-
     weather_type        VARCHAR(128),
     weather_desc        VARCHAR(1024),
-
     measure_units       VARCHAR(16),
-
     visibility_pct      FLOAT,
     cloud_pct           FLOAT,
-
     temp_deg            FLOAT,
     humidity_pct        FLOAT,
     pressure            FLOAT,
     temp_min            FLOAT,
     temp_max            FLOAT,
     feels_like          FLOAT,
-
     wind_deg            FLOAT,
     wind_gust           FLOAT,
     wind_speed          FLOAT,
-
     PRIMARY KEY (city_id, utc_recorded_at)
 );
 
@@ -54,4 +44,3 @@ COMMENT ON COLUMN current_weather.feels_like IS 'The perceived temperature at th
 COMMENT ON COLUMN current_weather.wind_deg IS 'The direction the wind was blowing at that time, expressed as degrees bearing';
 COMMENT ON COLUMN current_weather.wind_gust IS 'The force of the wind gusts at that time';
 COMMENT ON COLUMN current_weather.wind_speed IS 'The speed of the wind in units associated with the measure_units';
-

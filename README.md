@@ -77,10 +77,12 @@ Fork this repository and clone to your local environment
 
 - Prepare your environment with Python and any other tools you may need. Docker can do it for you.
   - To run the docker-compose, you need to run the following commands:
-      ```shell
+      ```bash
+      # Create you own .env file from our sample and edit the .env file with the OpenWeatherMap API key
+      cp env.sample .env
       # Initializing the folders and the non-root user for Airflow
       mkdir -p  ./logs ./plugins
-      echo -e "AIRFLOW_UID=$(id -u)" > .env
+      echo -e "AIRFLOW_UID=$(id -u)" >> .env
       # Initializing airflow database
       docker-compose up airflow-init
       # Running the docker-compose
