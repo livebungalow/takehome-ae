@@ -28,17 +28,43 @@ with DAG(
     # @TODO: Fill in the below
     t1 = PostgresOperator(
         task_id="create_modeled_dataset_table",
-        sql="""
-            CREATE TABLE IF NOT EXISTS current_weather (
-           );
-          """,
+        sql="sql/create_current_weather_tbl.sql",
     )
 
     # @TODO: Fill in the below
     t2 = PostgresOperator(
         task_id="transform_raw_into_modelled",
-        sql="""
-            SELECT * FROM raw_current_weather ...
-          """,
+        sql="sql/transform_raw_into_modelled.sql",
     )
-    t1 >> t2
+
+    t3 = PostgresOperator(
+        task_id="create_historical_table",
+        sql="sql/create_weather_tbl.sql",
+    )
+
+    t4 = PostgresOperator(
+        task_id="upsert_current_into_histweather",
+        sql="sql/upsert_current_into_histweather.sql",
+    )
+
+    t5 = PostgresOperator(
+        task_id="create_view_of_daily_hot_cities",
+        sql="sql/create_daily_hot_cities_vw.sql",
+    )
+
+    t6 = PostgresOperator(
+        task_id="create_view_of_hottest_day_per_city_per_year",
+        sql="sql/create_hottest_day_per_city_per_year_vw.sql",
+    )
+
+    t7 = PostgresOperator(
+        task_id="create_view_of_least_humid_city_per_weather_state",
+        sql="sql/create_least_humid_city_per_weather_state_vw.sql",
+    )
+
+    t8 = PostgresOperator(
+        task_id="create_view_of_moving_avg_temp_per_city",
+        sql="sql/create_moving_avg_temp_per_city_vw.sql",
+    )
+
+    t1 >> t2 >> t3 >> t4 >> t5 >> [t6,t7,t8]

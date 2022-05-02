@@ -44,6 +44,8 @@ def construct_insert_statement(**context) -> str:
     return f"""
         SET TIME ZONE 'UTC';
 
+        TRUNCATE TABLE raw_current_weather;
+
         INSERT INTO raw_current_weather (city_id, unix_time_seconds, tz_offset_seconds, raw_data, created_at, updated_at)
             VALUES
                 {values_stmt}
@@ -86,7 +88,8 @@ with DAG(
         python_callable=ingest_api_data,
         retries=1,
         op_kwargs={
-            "city_ids": ["5992996", "6058560"],  # KW, London (ON)
+            "city_ids": ["5992996", "6058560", "5967629", "6052909", "5322317", "6640171", "6942276", "6694298", "5284756", "6167865", "5894171", "5894228"], 
+            # KW, London, Guelph, Leslieville, Acton, Beresford, Chantham-Kent, Chesley, Fillmore, Toronto, Barrie, Barrington
         },
     )
 
