@@ -4,9 +4,9 @@ SELECT
     raw_data -> 'name' AS city_name,
     raw_data -> 'sys' ->> 'country' AS country,
     to_timestamp(unix_time_seconds) AS utc_recorded_at,
-    NULL AS tz_offset_seconds,
+    NULL AS tz_offset_hours,
     CAST(raw_data -> 'coord' ->> 'lat' AS FLOAT) AS lat,
-    CAST(raw_data -> 'coord' ->> 'lon' AS FLOAT) AS long,
+    CAST(raw_data -> 'coord' ->> 'lon' AS FLOAT) AS lon,
     raw_data -> 'weather' -> 0 -> 'main'  AS weather_type,
     raw_data -> 'weather' -> 0 -> 'description' AS weather_desc,
     NULL as measure_units,
@@ -22,4 +22,24 @@ SELECT
     CAST(raw_data -> 'wind' ->> 'gust' AS FLOAT) AS wind_gust,
     CAST(raw_data -> 'wind' ->> 'speed' AS FLOAT) AS wind_speed
 FROM raw_current_weather
-ON CONFLICT DO NOTHING;
+ON CONFLICT ( city_id, utc_recorded_at )
+    DO UPDATE SET
+    city_name = EXCLUDED.city_name,
+    country = EXCLUDED.country,
+    tz_offset_hours = EXCLUDED.tz_offset_hours,
+    lat = EXCLUDED.lat,
+    lon = EXCLUDED.lon,
+    weather_type = EXCLUDED.weather_type,
+    weather_desc = EXCLUDED.weather_desc,
+    measure_units = EXCLUDED.measure_units,
+    visibility_pct = EXCLUDED.visibility_pct,
+    cloud_pct = EXCLUDED.cloud_pct,
+    temp_deg = EXCLUDED.temp_deg,
+    humidity_pct = EXCLUDED.humidity_pct,
+    pressure = EXCLUDED.pressure,
+    temp_min = EXCLUDED.temp_min,
+    temp_max = EXCLUDED.temp_max,
+    feels_like = EXCLUDED.feels_like,
+    wind_deg = EXCLUDED.wind_deg,
+    wind_gust = EXCLUDED.wind_gust,
+    wind_speed = EXCLUDED.wind_speed
