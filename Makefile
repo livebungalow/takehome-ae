@@ -3,7 +3,7 @@ startup_init:
 	docker-compose up airflow-init
 
 .PHONY: startup
-startup: startup_init
+startup:
 	docker-compose up
 
 .PHONY: watch
