@@ -1,0 +1,46 @@
+{
+    "dt": 1652558297,
+    "id": 5128581,
+    "cod": 200,
+    "sys": {
+        "id": 2039034,
+        "type": 2,
+        "sunset": 1652573094,
+        "country": "US",
+        "sunrise": 1652521199
+    },
+    "base": "stations",
+    "main": {
+        "temp": 19.14,
+        "humidity": 86,
+        "pressure": 1017,
+        "temp_max": 24.15,
+        "temp_min": 14.99,
+        "feels_like": 19.36
+    },
+    "name": "New York",
+    "rain": {
+        "1h": 2.71
+    },
+    "wind": {
+        "deg": 150,
+        "speed": 5.66
+    },
+    "coord": {
+        "lat": 40.7143,
+        "lon": -74.006
+    },
+    "clouds": {
+        "all": 100
+    },
+    "weather": [
+        {
+            "id": 501,
+            "icon": "10d",
+            "main": "Rain",
+            "description": "moderate rain"
+        }
+    ],
+    "timezone": -14400,
+    "visibility": 9656
+}

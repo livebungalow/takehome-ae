@@ -41,10 +41,10 @@ We will expect to see the following items in your Github pull request:
 
 - Your Python code for data fetcher and transformer.
   - In the transformer, please create data models for:
-    - Top hot cities in your city list per day
+    - Top hot cities in your "city list" per day
     - Top 7 hottest day per city in each calendar year
     - An UPSERT dataset that keeps the latest weather information per city
-    - The least humid city per state
+    - The least humid city per country
     - Moving average of the temperature per city for 5 readings
 
 - The data model SQL and your design for its data modelling
