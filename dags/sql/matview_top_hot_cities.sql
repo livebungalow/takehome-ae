@@ -4,11 +4,18 @@
 -- Create Matview Statment
 CREATE MATERIALIZED VIEW IF NOT EXISTS hot_cities
 AS
-    SELECT * FROM current_weather
-    WHERE utc_recorded_at = (SELECT MAX(utc_recorded_at) FROM current_weather)
-    ORDER BY temp_deg DESC
-    LIMIT 5;
+    WITH base AS (
+        SELECT
+        utc_recorded_at::date as day,
+        dense_rank() OVER (PARTITION BY city_id , utc_recorded_at::date ORDER BY temp_deg DESC, utc_recorded_at DESC) as ranked,
+        *
+        FROM current_weather
+    )
 
+    SELECT * FROM base
+    WHERE ranked = 1
+    ORDER by day DESC, temp_deg DESC
+    ;
 -- Refresh Matview
 REFRESH MATERIALIZED VIEW hot_cities;
 
