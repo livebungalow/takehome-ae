@@ -16,6 +16,10 @@ def get_current_weather(
 
     API Docs: https://openweathermap.org/current
     """
+    # Test inputs
+    assert city_id.isnumeric
+    assert units in ['metric', 'standard', 'imperial']
+
     base_url: str = "http://api.openweathermap.org/data/2.5/weather"
     params = dict(
         appid=api_key or os.getenv("OPENWEATHER_API_KEY"),

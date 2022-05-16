@@ -1,13 +1,8 @@
 CREATE TABLE IF NOT EXISTS current_weather (
     city_id             BIGINT,
-    city_name           VARCHAR(256),
-    country             VARCHAR(2),
     utc_recorded_at     TIMESTAMPTZ,
     tz_offset_hours     INTERVAL,
-    lat                 NUMERIC(11, 8),
-    lon                 NUMERIC(11, 8),
-    weather_type        VARCHAR(128),
-    weather_desc        VARCHAR(1024),
+    weather_id          INT,
     measure_units       VARCHAR(16),
     visibility_pct      FLOAT,
     cloud_pct           FLOAT,
@@ -20,27 +15,32 @@ CREATE TABLE IF NOT EXISTS current_weather (
     wind_deg            FLOAT,
     wind_gust           FLOAT,
     wind_speed          FLOAT,
-    PRIMARY KEY (city_id, utc_recorded_at)
+    created_at          TIMESTAMPTZ,
+    updated_at          TIMESTAMPTZ,
+    PRIMARY KEY (city_id, utc_recorded_at),
+    CONSTRAINT FK_city_id 
+        FOREIGN KEY (city_id) 
+        REFERENCES dim_cities (id),
+    CONSTRAINT FK_weather_id 
+        FOREIGN KEY (weather_id) 
+        REFERENCES dim_weather_types (id) 
 );
 
 COMMENT ON COLUMN current_weather.city_id IS 'The ID of the city according to OpenWeatherMap';
-COMMENT ON COLUMN current_weather.city_name IS 'The name of the city according to OpenWeatherMap';
-COMMENT ON COLUMN current_weather.country IS 'Two letter country code of the city according to OpenWeatherMap';
 COMMENT ON COLUMN current_weather.utc_recorded_at IS 'When the record was created in UTC time';
 COMMENT ON COLUMN current_weather.tz_offset_hours IS 'The timezone of the location where the record was created, expressed as a UTC offset in hours';
-COMMENT ON COLUMN current_weather.lat IS 'The latitude of the location where the record was created';
-COMMENT ON COLUMN current_weather.lon IS 'The longitude of the location where the record was created';
-COMMENT ON COLUMN current_weather.weather_type IS 'The recorded weather';
-COMMENT ON COLUMN current_weather.weather_desc IS 'A more precise description of the recorded weather';
-COMMENT ON COLUMN current_weather.measure_units IS 'One of "Metric", "Imperial", or "Standard"';
+COMMENT ON COLUMN current_weather.weather_id IS 'The recorded weather ID; join to `dim_weather_types` to get type and description';
+COMMENT ON COLUMN current_weather.measure_units IS 'One of "metric", "imperial", or "standard"';
 COMMENT ON COLUMN current_weather.visibility_pct IS 'The overall visibility expressed as a pct';
 COMMENT ON COLUMN current_weather.cloud_pct IS 'The cloud coverage expressed as a pct';
 COMMENT ON COLUMN current_weather.temp_deg IS 'The temperature in degrees, using the scale associated with the measure_units';
 COMMENT ON COLUMN current_weather.humidity_pct IS 'The humidity expressed as a pct';
-COMMENT ON COLUMN current_weather.pressure IS 'The atmospheric pressure, using the appropriate units associated with the measure_units';
+COMMENT ON COLUMN current_weather.pressure IS 'The atmospheric pressure, in hPa';
 COMMENT ON COLUMN current_weather.temp_min IS 'The lowest temperature felt at that time, using the appropriate units associated with the measure_units';
 COMMENT ON COLUMN current_weather.temp_max IS 'The highest temperature felt at that time, using the appropriate units associated with the measure_units';
 COMMENT ON COLUMN current_weather.feels_like IS 'The perceived temperature at that time, using the appropriate units associated with the measure_units';
 COMMENT ON COLUMN current_weather.wind_deg IS 'The direction the wind was blowing at that time, expressed as degrees bearing';
 COMMENT ON COLUMN current_weather.wind_gust IS 'The force of the wind gusts at that time';
 COMMENT ON COLUMN current_weather.wind_speed IS 'The speed of the wind in units associated with the measure_units';
+COMMENT ON COLUMN raw_current_weather.created_at IS 'When the payload was first taken from the OpenWeatherMap API';
+COMMENT ON COLUMN raw_current_weather.updated_at IS 'When this row was most recently updated';

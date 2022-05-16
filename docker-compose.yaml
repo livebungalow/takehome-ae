@@ -73,6 +73,7 @@ x-airflow-common:
 
 services:
   postgres:
+    platform: linux/amd64
     image: postgres:13
     environment:
       POSTGRES_USER: airflow
@@ -87,6 +88,7 @@ services:
     restart: always
 
   redis:
+    platform: linux/amd64
     image: redis:latest
     expose:
       - 6379
@@ -99,6 +101,7 @@ services:
 
   airflow-webserver:
     <<: *airflow-common
+    platform: linux/amd64
     command: webserver
     ports:
       - 8080:8080
@@ -115,6 +118,7 @@ services:
 
   airflow-scheduler:
     <<: *airflow-common
+    platform: linux/amd64
     command: scheduler
     healthcheck:
       test: ["CMD-SHELL", 'airflow jobs check --job-type SchedulerJob --hostname "$${HOSTNAME}"']
@@ -129,6 +133,7 @@ services:
 
   airflow-worker:
     <<: *airflow-common
+    platform: linux/amd64
     command: celery worker
     healthcheck:
       test:
@@ -150,6 +155,7 @@ services:
 
   airflow-triggerer:
     <<: *airflow-common
+    platform: linux/amd64
     command: triggerer
     healthcheck:
       test: ["CMD-SHELL", 'airflow jobs check --job-type TriggererJob --hostname "$${HOSTNAME}"']
@@ -164,6 +170,7 @@ services:
 
   airflow-init:
     <<: *airflow-common
+    platform: linux/amd64
     entrypoint: /bin/bash
     # yamllint disable rule:line-length
     command:
@@ -241,6 +248,7 @@ services:
 
   airflow-cli:
     <<: *airflow-common
+    platform: linux/amd64
     profiles:
       - debug
     environment:
@@ -254,6 +262,7 @@ services:
 
   flower:
     <<: *airflow-common
+    platform: linux/amd64
     command: celery flower
     ports:
       - 5555:5555
