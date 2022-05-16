@@ -86,7 +86,18 @@ with DAG(
         python_callable=ingest_api_data,
         retries=1,
         op_kwargs={
-            "city_ids": ["5992996", "6058560"],  # KW, London (ON)
+            "city_ids": [
+                "5128581",  # New York
+                "5391811",  # San Deigo
+                "5809844",  # Seattle
+                "4164138",  # Miami
+                "4671654",  # Austin
+                "4684888",  # Dallas
+                "4930956",  # Boston
+                "5746545",  # Portland
+                "5506956",  # Las Vegas
+                "5419384",  # Denver
+            ],  # KW, London (ON)
         },
     )
 
