@@ -100,16 +100,28 @@ Fork this repository and clone to your local environment
 - **Note:** If you are using Apple hardware with M1 processor, there is a common challenge with Docker. You can read more about it [here](https://javascript.plainenglish.io/which-docker-images-can-you-use-on-the-mac-m1-daba6bbc2dc5).
 
 ## Your notes (Readme.md) 
-@TODO: Add any additional notes / documentation in this file.
 
 ### Time spent
-Give us a rough estimate of the time you spent working on this. If you spent time learning in order to do this project please feel free to let us know that too. This makes sure that we are evaluating your work fairly and in context. It also gives us the opportunity to learn and adjust our process if needed.
+* Overall I spent ~4 hours on this project. As a rough breakdown:
+** In the first 30-45 minutes, I gathered context by reading assessment content, API docs, etc.
+** In the next ~15-30 minutes, I focused on data modeling considerations.
+** In the next ~1.5 hours, I implemented a draft of the solution.
+** In the next ~30 minutes, I cleaned up DAGs and added comments.
+** In the next ~30 minutes, I reviewed my code and compiled this doc.
+** In the last ~30 minutes, I tested my code and ensured that code runs as expected.
+* I moved this weekend from DC to LA! I wrapped up most of the project at the airport / on the plane, but had to wait until after I arrived and settled in at my new house (+ setting up Internet) to test my code and finalize the project.
+* LAstly, I actually had a very mild concussion last week. So I felt fine enough for the assessment, but that might have contributed to some slowness. 
 
 ### Assumptions
-Did you find yourself needing to make assumptions to finish this? If so, what were they and how did they impact your design/code?
+* Metadata on cities (`dim_tables`) and weather types (`dim_weather_types`) should not change in any meaningful way (in terms of downstream impact). If substantial changes are needed (e.g. two cities merge into one), we expect new records to be generated with new IDs.
+  * This allows us to normalize the raw dataset, and prevent duplicate records when joining the core weather table to dimension tables. (I.e. we can maintain dimension tables that are unique on each entity's ID.)
+* On Question #4 (least humid city), the original prompt said "per state". However, the input cities are in Canada, and the API docs note that state information is only available in the US. So I updated the prompt to "per country"; but please let me know if I am misunderstanding the prompt.
 
 ### Next steps
-Provide us with some notes about what you would do next if you had more time. Are there additional features that you would want to add? Specific improvements to your code you would make?
+* With more time, I would have focused next on considering additional table constraints, indexes and/or keys for optimizing downstream queries. 
+* Depending on business requirements, I would also have wanted to consider whether some derived views should be reconstructed as tables instead.
+* Adding tests to ensure data quality would also be a good next step. E.g., we should really test that updated dimension tables retain all entries that we used to have.
+* Lastly, I would definitely want to incorporate a tool like dbt to run all relevant transformations. This would streamline the process with minimal code, and enable documentation, tracking, tests, etc.
 
 ### Instructions to the evaluator
-Provide any end user documentation you think is necessary and useful here
+n/a

@@ -7,7 +7,10 @@ from airflow.operators.python import PythonOperator
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 
 
-def ingest_api_data(city_ids: t.List[str]) -> t.List[t.Tuple]:
+def ingest_api_data(
+    city_ids: t.List[str],
+    units: str = "metric",
+) -> t.List[t.Tuple]:
     """
     Pull payload from OpenWeatherAPI from a list of city IDs.
     """
@@ -23,6 +26,7 @@ def ingest_api_data(city_ids: t.List[str]) -> t.List[t.Tuple]:
                     payload["dt"],
                     payload["timezone"],
                     json.dumps(payload),
+                    units
                 )
             )
     return rows
@@ -34,8 +38,8 @@ def construct_insert_statement(**context) -> str:
     """
     rows = context["ti"].xcom_pull(key="return_value", task_ids="ingest_api_data")
     value_rows = [
-        "({}, {}, {}, '{}', {}, {})".format(
-            row[0], row[1], row[2], row[3], "now()", "now()"
+        "({}, {}, {}, '{}', {}, {}, {})".format(
+            row[0], row[1], row[2], row[3], "'" + row[4] + "'", "now()", "now()"
         )
         for row in rows
     ]
@@ -44,7 +48,7 @@ def construct_insert_statement(**context) -> str:
     return f"""
         SET TIME ZONE 'UTC';
 
-        INSERT INTO raw_current_weather (city_id, unix_time_seconds, tz_offset_seconds, raw_data, created_at, updated_at)
+        INSERT INTO raw_current_weather (city_id, unix_time_seconds, tz_offset_seconds, raw_data, units, created_at, updated_at)
             VALUES
                 {values_stmt}
 
@@ -78,7 +82,7 @@ with DAG(
 
     t1 = PostgresOperator(
         task_id="create_raw_dataset",
-        sql="sql/create_raw_current_weather_tbl.sql",
+        sql="sql/create_raw_current_weather_table.sql",
     )
 
     t2 = PythonOperator(
